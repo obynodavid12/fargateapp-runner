@@ -213,7 +213,7 @@ resource "aws_ecs_task_definition" "task_definition" {
         
         }
       },
-      "command": ["./entrypoint.sh"],
+      "entryPoint": ["./entrypoint.sh"],
       "secrets": [
         {"name": "ACCESS_TOKEN", "valueFrom": "${aws_secretsmanager_secret.ACCESS_TOKEN.arn}"}
       ],
