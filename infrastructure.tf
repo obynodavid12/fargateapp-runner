@@ -213,7 +213,8 @@ resource "aws_ecs_task_definition" "task_definition" {
         
         }
       },
-      "entryPoint": ["./entrypoint.sh"],
+      "entryPoint": ["/entrypoint.sh"],
+      "command": ["/usr/bin/supervisord", "-c", "/etc/supervisor/conf.d/supervisord.conf"],
       "secrets": [
         {"name": "ACCESS_TOKEN", "valueFrom": "${aws_secretsmanager_secret.ACCESS_TOKEN.arn}"}
       ],
