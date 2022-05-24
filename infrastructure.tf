@@ -202,31 +202,33 @@ resource "aws_ecs_task_definition" "task_definition" {
       "cpu": 256,
       "memory": 512,
       "essential": true,
-      "portMappings": [],
-      "environment": [
-        {"name": "RUNNER_NAME", "value": "${runner_name}"},
-        {"name": "RUNNER_REPOSITORY_URL", "value": "${runner_repository_url}"}
-        {"name": "RUNNER_LABELS", "value": "${runner_labels}"}
-      ],
-      "secrets": [
-        {"name": "PERSONAL_ACCESS_TOKEN", "valueFrom": "${aws_secretsmanager_secret.personal_access_token_arn}"}
+      "network_mode": "awsvpc",
+      "portMappings": [
+        {
+          "containerPort": 80
+        } 
       ],
       "logConfiguration": {
         "logDriver": "awslogs",
-        "secretOptions": null,
         "options": {
-          "awslogs-group": "/ecs/${var.prefix}-task-def",
-          "awslogs-region": "us-east-2",
-          "awslogs-stream-prefix": "ecs"
+            "awslogs-region": "us-east-2",
+            "awslogs-group": "/ecs/${var.prefix}-task-def",
+            "awslogs-stream-prefix": "ecs" 
+        
         }
       },
-      "mountPoints": [],
-      "volumesFrom": [],
-      "entryPoint": [
-             "./entrypoint.sh"
+      "command": ["./entrypoint.sh"],
+      "secrets": [
+        {"name": "PERSONAL_ACCESS_TOKEN", "valueFrom": "${aws_secretsmanager_secret.PERSONAL_ACCESS_TOKEN.arn}"}
+      ],
+      "environment": [
+        {"name": "RUNNER_NAME", "value": "${var.RUNNER_NAME}"},
+        {"name": "RUNNER_REPOSITORY_URL", "value": "${var.RUNNER_REPOSITORY_URL}"},
+        {"name": "RUNNER_LABELS", "value": "${var.RUNNER_LABELS}"}
       ]
+       
     }
-]
+  ]
   TASK_DEFINITION
 }
 
@@ -285,7 +287,7 @@ resource "aws_iam_role_policy" "password_policy_secretsmanager" {
         ],
         "Effect": "Allow",
         "Resource": [
-            "${aws_secretsmanager_secret.PERSONAL_ACCESS_TOKEN_arn}"
+            "${aws_secretsmanager_secret.PERSONAL_ACCESS_TOKEN.arn}"
         ]
       }
     ]
