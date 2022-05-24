@@ -13,12 +13,12 @@ variable "aws_region" {
 variable "RUNNER_NAME" {
   description = "the name of the runner"
   type        = string
-  default     = "fargate-runner1"
+  default     = "fargate-runner2"
 }
 variable "RUNNER_LABELS" {
   description = "the name of the self hosted runner"
   type        = string
-  default     = "fargate-runner1"
+  default     = "fargate-runner2"
 }
 
 variable "RUNNER_REPOSITORY_URL" {

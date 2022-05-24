@@ -18,9 +18,9 @@ jobs:
       AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
       AWS_REGION: ${{ secrets.AWS_REGION }}
       AWS_ACCOUNT_ID: ${{ secrets.AWS_ACCOUNT_ID }}
-      RUNNER_NAME: fargate-runner1
+      RUNNER_NAME: fargate-runner2
       RUNNER_REPOSITORY_URL: https://github.com/obynodavid12/fargateapp-runner
-      RUNNER_LABELS: fargate-runner1
+      RUNNER_LABELS: fargate-runner2
 
     
     # Checkout the repository to the GitHub Actions runner
@@ -122,9 +122,9 @@ jobs:
         AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
         AWS_REGION: ${{ secrets.AWS_REGION }}
         AWS_ACCOUNT_ID: ${{ secrets.AWS_ACCOUNT_ID }}
-        RUNNER_NAME: fargate-runner1
+        RUNNER_NAME: fargate-runner2
         RUNNER_REPOSITORY_URL: https://github.com/obynodavid12/fargateapp-runner
-        RUNNER_LABELS: fargate-runner1
+        RUNNER_LABELS: fargate-runner2
       run: |  
         docker build -f Dockerfile -q -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG .
         echo "Pushing image to ECR..."
