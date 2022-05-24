@@ -203,11 +203,7 @@ resource "aws_ecs_task_definition" "task_definition" {
       "memory": 512,
       "essential": true,
       "network_mode": "awsvpc",
-      "portMappings": [
-        {
-          "containerPort": 80
-        } 
-      ],
+      "portMappings": [],
       "logConfiguration": {
         "logDriver": "awslogs",
         "options": {
