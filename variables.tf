@@ -10,18 +10,6 @@ variable "aws_region" {
   default     = "us-east-2"
 }
 
-# variable "aws_secret_access_key" {
-#   description = "aws secret access"
-#   type        = string
-#   default     = ""
-# }
-
-# variable "aws_access_key_id" {
-#   description = "aws access key"
-#   type        = string
-#   default     = ""
-# }
-
 variable "RUNNER_NAME" {
   description = "the name of the runner"
   type        = string
