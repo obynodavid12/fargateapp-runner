@@ -81,10 +81,10 @@ jobs:
         path: |
            tfoutput.json
 
-    # - name: Terraform destroy
-    #   if: github.ref == 'refs/heads/master' && github.event_name == 'push'
-    #   id: destroy
-    #   run: terraform destroy -auto-approve
+    - name: Terraform destroy
+      if: github.ref == 'refs/heads/master' && github.event_name == 'push'
+      id: destroy
+      run: terraform destroy -auto-approve
          
      
     
