@@ -22,18 +22,18 @@ variable "aws_region" {
 #   default     = ""
 # }
 
-variable "runner_name" {
+variable "RUNNER_NAME" {
   description = "the name of the runner"
   type        = string
   default     = "fargate-runner1"
 }
-variable "runner_labels" {
+variable "RUNNER_LABELS" {
   description = "the name of the self hosted runner"
   type        = string
   default     = "fargate-runner1"
 }
 
-variable "runner_repository_url" {
+variable "RUNNER_REPOSITORY_URL" {
   description = "the url of the repository"
   type        = string
   default     = "https://github.com/obynodavid12/fargateapp-runner"
