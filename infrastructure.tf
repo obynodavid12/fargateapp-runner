@@ -172,7 +172,7 @@ resource "aws_iam_role_policy_attachment" "admin-policy-attachment" {
 
 # Secrets
 resource "aws_secretsmanager_secret" "PERSONAL_ACCESS_TOKEN" {
-  name = "${var.prefix}-GITHUB_ACCESS_TOKEN"
+  name = "${var.prefix}-PERSONAL_ACCESS_TOKEN"
 }
 
 resource "aws_secretsmanager_secret_version" "PERSONAL_ACCESS_TOKEN_version" {
@@ -285,7 +285,7 @@ resource "aws_iam_role_policy" "password_policy_secretsmanager" {
         ],
         "Effect": "Allow",
         "Resource": [
-            "${aws_secretsmanager_secret.personal_access_token_arn}"
+            "${aws_secretsmanager_secret.PERSONAL_ACCESS_TOKEN_arn}"
         ]
       }
     ]
