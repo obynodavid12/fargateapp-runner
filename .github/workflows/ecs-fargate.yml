@@ -64,9 +64,9 @@ jobs:
     - name: Terraform Apply
       if: github.ref == 'refs/heads/master'
       run: |
-        #chmod +x tf_apply.sh
-        #./tf_apply.sh
-        terraform apply -auto-approve -var="ACCESS_TOKEN=${{ secrets.ACCESS_TOKEN }}" -var="RUNNER_NAME=${runner_name}" -var="RUNNER_REPOSITORY_URL=${runner_repository_url}" -var="RUNNER_LABELS=${runner_labels}"
+        chmod +x tf_apply.sh
+        ./tf_apply.sh
+        #terraform apply -auto-approve -var="ACCESS_TOKEN=${{ secrets.ACCESS_TOKEN }}" -var="RUNNER_NAME=${runner_name}" -var="RUNNER_REPOSITORY_URL=${runner_repository_url}" -var="RUNNER_LABELS=${runner_labels}"
        
                 
                 
