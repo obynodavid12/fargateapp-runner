@@ -171,13 +171,13 @@ resource "aws_iam_role_policy_attachment" "admin-policy-attachment" {
 }
 
 # Secrets
-resource "aws_secretsmanager_secret" "PERSONAL_ACCESS_TOKEN" {
-  name = "${var.prefix}-PERSONAL_ACCESS_TOKEN"
+resource "aws_secretsmanager_secret" "ACCESS_TOKEN" {
+  name = "${var.prefix}-ACCESS_TOKEN"
 }
 
-resource "aws_secretsmanager_secret_version" "PERSONAL_ACCESS_TOKEN_version" {
-  secret_id     = aws_secretsmanager_secret.PERSONAL_ACCESS_TOKEN.id
-  secret_string = var.PERSONAL_ACCESS_TOKEN
+resource "aws_secretsmanager_secret_version" "ACCESS_TOKEN_version" {
+  secret_id     = aws_secretsmanager_secret.ACCESS_TOKEN.id
+  secret_string = var.ACCESS_TOKEN
 }
 
 
@@ -219,7 +219,7 @@ resource "aws_ecs_task_definition" "task_definition" {
       },
       "command": ["./entrypoint.sh"],
       "secrets": [
-        {"name": "PERSONAL_ACCESS_TOKEN", "valueFrom": "${aws_secretsmanager_secret.PERSONAL_ACCESS_TOKEN.arn}"}
+        {"name": "ACCESS_TOKEN", "valueFrom": "${aws_secretsmanager_secret.ACCESS_TOKEN.arn}"}
       ],
       "environment": [
         {"name": "RUNNER_NAME", "value": "${var.RUNNER_NAME}"},
@@ -287,7 +287,7 @@ resource "aws_iam_role_policy" "password_policy_secretsmanager" {
         ],
         "Effect": "Allow",
         "Resource": [
-            "${aws_secretsmanager_secret.PERSONAL_ACCESS_TOKEN.arn}"
+            "${aws_secretsmanager_secret.ACCESS_TOKEN.arn}"
         ]
       }
     ]
