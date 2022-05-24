@@ -1,0 +1,1 @@
+TF_VAR_RUNNER_NAME="${runner_name}" TF_VAR_RUNNER_REPOSITORY_URL="${runner_repository_url}" TF_VAR_RUNNER_LABELS="${runner_labels}" TF_VAR_PERSONAL_ACCESS_TOKEN="${personal_access_token}" terraform apply -auto-approve
