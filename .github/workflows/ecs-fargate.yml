@@ -12,7 +12,7 @@ jobs:
     name: 'Terraform'
     runs-on: ubuntu-latest
     env:
-      ACCESS_TOKEN: ${{ secrets.ACCESS_TOKEN }}
+      PAT_RUNNER_TOKEN: ${{ secrets.PAT_RUNNER_TOKEN }}
       ECR_REPOSITORY: ${{ secrets.ECR_REPOSITORY }}
       AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
       AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
@@ -66,7 +66,7 @@ jobs:
       run: |
         #chmod +x tf_apply.sh
         #./tf_apply.sh
-        terraform apply -auto-approve -var="ACCESS_TOKEN=${{ secrets.ACCESS_TOKEN }}" -var="RUNNER_NAME=${{ env.RUNNER_NAME }}" -var="RUNNER_REPOSITORY_URL=${{ env.RUNNER_REPOSITORY_URL }}" -var="RUNNER_LABELS=${{ env.RUNNER_LABELS }}"
+        terraform apply -auto-approve -var="PAT_RUNNER_TOKEN=${{ secrets.PAT_RUNNER_TOKEN }}" -var="RUNNER_NAME=${{ env.RUNNER_NAME }}" -var="RUNNER_REPOSITORY_URL=${{ env.RUNNER_REPOSITORY_URL }}" -var="RUNNER_LABELS=${{ env.RUNNER_LABELS }}"
        
                 
                 
@@ -118,7 +118,7 @@ jobs:
         ECR_REPOSITORY: ${{ secrets.ECR_REPOSITORY }}
         ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
         IMAGE_TAG: "latest"
-        ACCESS_TOKEN: ${{ secrets.ACCESS_TOKEN }} 
+        PAT_RUNNER_TOKEN: ${{ secrets.PAT_RUNNER_TOKEN }} 
         AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
         AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
         AWS_REGION: ${{ secrets.AWS_REGION }}
