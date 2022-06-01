@@ -1,21 +1,21 @@
-name: Fargate Runner Test
+# name: Fargate Runner Test
 
-on: push
+# on: push
   
 
-jobs:
-  fargate_self_hosted:
-    name: Testing self-hosted tag
-    runs-on: [ 'fargate-runner' ]
-    steps:
-      - name: step 1
-        run: echo "Hello World!"
+# jobs:
+#   fargate_self_hosted:
+#     name: Testing self-hosted tag
+#     runs-on: [ 'fargate-runner' ]
+#     steps:
+#       - name: step 1
+#         run: echo "Hello World!"
     
-  build1:
-      runs-on: self-hosted
+#   build1:
+#       runs-on: self-hosted
      
-      steps:
-       - uses: actions/checkout@v3
-       - run: | 
-           pwd
-           ls -larh    
+#       steps:
+#        - uses: actions/checkout@v3
+#        - run: | 
+#            pwd
+#            ls -larh    

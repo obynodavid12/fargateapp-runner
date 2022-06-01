@@ -172,7 +172,8 @@ resource "aws_iam_role_policy_attachment" "admin-policy-attachment" {
 
 # Secrets
 resource "aws_secretsmanager_secret" "PAT_RUNNER_TOKEN" {
-  name = "${var.prefix}-PAT_RUNNER_TOKEN"
+  name                    = "${var.prefix}-PAT_RUNNER_TOKEN"
+  recovery_window_in_days = var.secret_retention_days
 }
 
 resource "aws_secretsmanager_secret_version" "PAT_RUNNER_TOKEN_version" {

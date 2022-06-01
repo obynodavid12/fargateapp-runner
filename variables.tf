@@ -10,6 +10,10 @@ variable "aws_region" {
   default     = "us-east-2"
 }
 
+variable "secret_retention_days" {
+  default     = 0
+  description = "Number of days before secret is actually deleted. Increasing this above 0 will result in Terraform errors if you redeploy to the same workspace."
+}
 variable "RUNNER_NAME" {
   description = "the name of the runner"
   type        = string
