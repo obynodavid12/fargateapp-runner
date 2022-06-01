@@ -14,8 +14,8 @@ if [[ -z $RUNNER_WORK_DIRECTORY ]]; then
     export RUNNER_WORK_DIRECTORY="_work"
 fi
 
-if [[ -z $RUNNER_TOKEN && -z $RUNNER_ACCESS_TOKEN ]]; then
-    echo "Error : You need to set RUNNER_TOKEN (or RUNNER_ACCESS_TOKEN) environment variable."
+if [[ -z $RUNNER_TOKEN && -z $PAT_TOKEN ]]; then
+    echo "Error : You need to set RUNNER_TOKEN (or PAT_TOKEN) environment variable."
     exit 1
 fi
 
@@ -48,18 +48,18 @@ else
         RUNNER_URL="${RUNNER_REPOSITORY_URL}"
     fi
 
-    if [[ -n $RUNNER_ACCESS_TOKEN ]]; then
+    if [[ -n $PAT_TOKEN ]]; then
 
         echo "Exchanging the Personal Access Token with a Runner Token (scope: ${SCOPE})..."
 
         _PROTO="$(echo "${RUNNER_URL}" | grep :// | sed -e's,^\(.*://\).*,\1,g')"
         _URL="$(echo "${RUNNER_URL/${_PROTO}/}")"
-        _RUNNER_ACCESS_TOKENH="$(echo "${_URL}" | grep / | cut -d/ -f2-)"
+        _PAT_TOKENH="$(echo "${_URL}" | grep / | cut -d/ -f2-)"
 
         RUNNER_TOKEN="$(curl -XPOST -fsSL \
-            -H "Authorization: token ${RUNNER_ACCESS_TOKEN}" \
+            -H "Authorization: token ${PAT_TOKEN}" \
             -H "Accept: application/vnd.github.v3+json" \
-            "https://api.github.com/${SCOPE}/${_RUNNER_ACCESS_TOKENH}/actions/runners/registration-token" \
+            "https://api.github.com/${SCOPE}/${_PAT_TOKENH}/actions/runners/registration-token" \
             | jq -r '.token')"
     fi
 
