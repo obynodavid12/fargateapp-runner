@@ -171,14 +171,14 @@ resource "aws_iam_role_policy_attachment" "admin-policy-attachment" {
 }
 
 # Secrets
-resource "aws_secretsmanager_secret" "PAT_RUNNER_TOKEN" {
-  name                    = "${var.prefix}-PAT_RUNNER_TOKEN"
+resource "aws_secretsmanager_secret" "PAT" {
+  name                    = "${var.prefix}-PAT"
   recovery_window_in_days = var.secret_retention_days
 }
 
-resource "aws_secretsmanager_secret_version" "PAT_RUNNER_TOKEN_version" {
-  secret_id     = aws_secretsmanager_secret.PAT_RUNNER_TOKEN.id
-  secret_string = var.PAT_RUNNER_TOKEN
+resource "aws_secretsmanager_secret_version" "PAT_version" {
+  secret_id     = aws_secretsmanager_secret.PAT.id
+  secret_string = var.PAT
 }
 
 
@@ -217,7 +217,7 @@ resource "aws_ecs_task_definition" "task_definition" {
       "entryPoint": ["/entrypoint.sh"],
       "command": ["/usr/bin/supervisord", "-c", "/etc/supervisor/conf.d/supervisord.conf"],
       "secrets": [
-        {"name": "PAT_RUNNER_TOKEN", "valueFrom": "${aws_secretsmanager_secret.PAT_RUNNER_TOKEN.arn}"}
+        {"name": "PAT", "valueFrom": "${aws_secretsmanager_secret.PAT.arn}"}
       ],
       "environment": [
         {"name": "RUNNER_NAME", "value": "${var.RUNNER_NAME}"},
@@ -285,7 +285,7 @@ resource "aws_iam_role_policy" "password_policy_secretsmanager" {
         ],
         "Effect": "Allow",
         "Resource": [
-            "${aws_secretsmanager_secret.PAT_RUNNER_TOKEN.arn}"
+            "${aws_secretsmanager_secret.PAT.arn}"
         ]
       }
     ]

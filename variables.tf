@@ -1,4 +1,4 @@
-variable "PAT_RUNNER_TOKEN" {
+variable "PAT" {
   description = "AWS SecretsManager ARN for personal access token"
   type        = string
   default     = ""
