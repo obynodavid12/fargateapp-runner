@@ -127,6 +127,25 @@ resource "aws_ecr_repository" "ECR_repository" {
   }
 }
 
+resource "aws_ecr_lifecycle_policy" "ECR_repository" {
+  repository = aws_ecr_repository.ECR_repository.name
+
+  policy = jsonencode({
+    rules = [{
+      rulePriority = 1
+      description  = "keep last 10 images"
+      action = {
+        type = "expire"
+      }
+      selection = {
+        tagStatus   = "any"
+        countType   = "imageCountMoreThan"
+        countNumber = 10
+      }
+    }]
+  })
+}
+
 # ECS cluster
 resource "aws_ecs_cluster" "ecs_cluster" {
   name = "${var.prefix}-cluster"
@@ -184,7 +203,8 @@ resource "aws_secretsmanager_secret_version" "PAT_TOKEN_version" {
 
 # Task definition
 resource "aws_cloudwatch_log_group" "ecs-log-group" {
-  name = "/ecs/${var.prefix}-task-def"
+  name              = "/ecs/${var.prefix}-task-def"
+  retention_in_days = var.cloudwatch_retention_in_days
 }
 
 resource "aws_ecs_task_definition" "task_definition" {
@@ -267,7 +287,15 @@ resource "aws_ecs_service" "ecs_service" {
     subnets          = [aws_subnet.private_subnet.id]
     assign_public_ip = false
   }
+
+  # lifecycle {
+  #   ignore_changes = [task_definition, desired_count]
+  # }
+  tags = {
+    Name = "${var.prefix}_ecs_service"
+  }
 }
+
 
 
 # Giving a Fargate access to the Secrets in the Secret Manager

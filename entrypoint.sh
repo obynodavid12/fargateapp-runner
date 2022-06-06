@@ -59,7 +59,7 @@ else
         RUNNER_TOKEN="$(curl -XPOST -fsSL \
             -H "Authorization: token ${PAT_TOKEN}" \
             -H "Accept: application/vnd.github.v3+json" \
-            "https://api.github.com/${SCOPE}/${_PAT_TOKEN}/actions/runners/registration-token" \
+            "https://api.github.com/${SCOPE}/${_PATH}/actions/runners/registration-token" \
             | jq -r '.token')"
     fi
 

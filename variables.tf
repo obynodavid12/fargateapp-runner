@@ -50,6 +50,13 @@ variable "public_subnet_cidr" {
   default     = "172.31.48.0/20"
 }
 
+variable "cloudwatch_retention_in_days" {
+  type        = number
+  description = "AWS CloudWatch Logs Retention in Days. Possible values are: 1, 3, 5, 7, 14, 30, 60, 90, 120, 150, 180, 365, 400, 545, 731, 1827, 3653, and 0. If you select 0, the events in the log group are always retained and never expire."
+  default     = 1
+}
+
+
 # variable "fargate_cpu" {
 #   description = "Fargate instance CPU units to provision"
 #   type        = number
