@@ -50,11 +50,11 @@ else
 
     if [[ -n $PAT_TOKEN ]]; then
 
-        echo "Exchanging the Personal Access Token with a Runner Token (scope: ${SCOPE})..."
+        echo "Exchanging the GitHub Access Token with a Runner Token (scope: ${SCOPE})..."
 
         _PROTO="$(echo "${RUNNER_URL}" | grep :// | sed -e's,^\(.*://\).*,\1,g')"
         _URL="$(echo "${RUNNER_URL/${_PROTO}/}")"
-        _PAT_TOKENH="$(echo "${_URL}" | grep / | cut -d/ -f2-)"
+        _PATH="$(echo "${_URL}" | grep / | cut -d/ -f2-)"
 
         RUNNER_TOKEN="$(curl -XPOST -fsSL \
             -H "Authorization: token ${PAT_TOKEN}" \
