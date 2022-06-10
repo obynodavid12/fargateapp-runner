@@ -57,20 +57,37 @@ variable "cloudwatch_retention_in_days" {
 }
 
 
-# variable "fargate_cpu" {
-#   description = "Fargate instance CPU units to provision"
-#   type        = number
-#   default     = "256"
-# }
+variable "fargate_cpu" {
+  description = "Fargate instance CPU units to provision"
+  type        = number
+  default     = "256"
+}
 
-# variable "fargate_memory" {
-#   description = "Fargate instance memory units to provision"
-#   type        = number
-#   default     = "512"
-# }
+variable "fargate_memory" {
+  description = "Fargate instance memory units to provision"
+  type        = number
+  default     = "512"
+}
 
-# variable "ecr_repo_url" {
-#   description = "Docker image to be run in the ECS cluster"
-#   default     = "106878672844.dkr.ecr.us-east-2.amazonaws.com/ecs-runner:latest"
-# }
+variable "ecr_repo_url" {
+  description = "Docker image to be run in the ECS cluster"
+  default     = "106878672844.dkr.ecr.us-east-2.amazonaws.com/ecs-runner:latest"
+}
 
+variable "assign_public_ip" {
+  description = "Choose whether to assign a public IP address to the Elastic Network Interface."
+  type        = bool
+  default     = false
+}
+
+variable "task_cpu" {
+  description = "The ECS Task CPU size"
+  type        = number
+  default     = 512
+}
+
+variable "task_memory" {
+  description = "The ECS Task memory size"
+  type        = number
+  default     = 1024
+}

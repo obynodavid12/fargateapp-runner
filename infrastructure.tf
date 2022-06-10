@@ -207,21 +207,24 @@ resource "aws_cloudwatch_log_group" "ecs-log-group" {
   retention_in_days = var.cloudwatch_retention_in_days
 }
 
+data "aws_ecs_task_definition" "task_definition" {
+  task_definition = aws_ecs_task_definition.task_definition.family
+}
 resource "aws_ecs_task_definition" "task_definition" {
   family                   = "${var.prefix}-task-def"
   network_mode             = "awsvpc"
   requires_compatibilities = ["FARGATE"]
-  cpu                      = 512
-  memory                   = "1024"
+  cpu                      = var.task_cpu
+  memory                   = var.task_memory
   task_role_arn            = aws_iam_role.ecs_task_execution_role.arn
   execution_role_arn       = aws_iam_role.ecs_task_execution_role.arn
   container_definitions    = <<TASK_DEFINITION
   [
     {
-      "name": "ecs-runner",
-      "image": "106878672844.dkr.ecr.us-east-2.amazonaws.com/ecs-runner:latest",
-      "cpu": 256,
-      "memory": 512,
+      "name": "${var.prefix}",
+      "image": "${var.ecr_repo_url}",
+      "cpu": ${var.fargate_cpu},
+      "memory": ${var.fargate.memory},
       "essential": true,
       "network_mode": "awsvpc",
       "portMappings": [],
@@ -278,19 +281,19 @@ resource "aws_security_group" "ecs_sg" {
 resource "aws_ecs_service" "ecs_service" {
   name            = "${var.prefix}-ecs-service"
   cluster         = aws_ecs_cluster.ecs_cluster.id
-  task_definition = aws_ecs_task_definition.task_definition.arn
+  task_definition = "${aws_ecs_task_definition.task_definition.family}:${max("${aws_ecs_task_definition.task_definition.revision}", "${data.aws_ecs_task_definition.task_definition.revision}")}"
   desired_count   = "1"
   launch_type     = "FARGATE"
 
   network_configuration {
     security_groups  = [aws_security_group.ecs_sg.id]
     subnets          = [aws_subnet.private_subnet.id]
-    assign_public_ip = false
+    assign_public_ip = var.assign_public_ip
   }
 
-  # lifecycle {
-  #   ignore_changes = [task_definition, desired_count]
-  # }
+  lifecycle {
+    ignore_changes = [task_definition, desired_count]
+  }
   tags = {
     Name = "${var.prefix}_ecs_service"
   }
