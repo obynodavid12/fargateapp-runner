@@ -224,7 +224,7 @@ resource "aws_ecs_task_definition" "task_definition" {
       "name": "${var.prefix}",
       "image": "${var.ecr_repo_url}",
       "cpu": ${var.fargate_cpu},
-      "memory": ${var.fargate.memory},
+      "memory": ${var.fargate_memory},
       "essential": true,
       "network_mode": "awsvpc",
       "portMappings": [],
